@@ -30,8 +30,9 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
-                <input type="text" id="email" name="email" class="form-control"/>
-                <span class="error">* <?php echo $emailErr; ?></span>
+                <span style="color:darkred" class="error"> <?php echo $emailErr; ?></span>
+                <input type="text" value="<?php echo htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES); ?>"
+                       id="email" name="email" class="form-control" input/>
             </div>
             <div></div>
         </div>
@@ -42,25 +43,32 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
-                    <input type="text" name="street" id="street" class="form-control">
-                    <span class="error">* <?php echo $streetErr; ?></span>
+                    <span style="color:darkred" class="error"> <?php echo $streetErr; ?></span>
+                    <input type="text" name="street"
+                           value="<?php echo htmlspecialchars($_POST['street'] ?? '', ENT_QUOTES); ?>" id="street"
+                           class="form-control">
+                    <!-- remember value https://webstoked.com/keep-form-data-submit-refresh-php/ -->
+                    <!-- htmlspecialchars() is used here to convert specific HTML characters to their HTML entity names, e.g. > will be converted to &gt;. This prevents the form from breaking if the user submits HTML markup and also is a means of protecting against XSS (Cross Site Scripting) attacks, which attackers will use to try to exploit vulnerabilities in web applications -->
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control">
-                    <span class="error">* <?php echo $numberErr; ?></span>
+                    <label for="streetnumber">Street number (only numbers):</label>
+                    <span style="color:darkred" class="error"> <?php echo $streetNumberErr; ?></span>
+                    <input type="text" value="<?php echo htmlspecialchars($_POST['streetnumber'] ?? '', ENT_QUOTES); ?>"
+                           id="streetnumber" name="streetnumber" class="form-control">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" class="form-control">
-                    <span class="error">* <?php echo $cityErr; ?></span>
+                    <span style="color:darkred" class="error"> <?php echo $cityErr; ?></span>
+                    <input type="text" value="<?php echo htmlspecialchars($_POST['city'] ?? '', ENT_QUOTES); ?>"
+                           id="city" name="city" class="form-control">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" name="zipcode" class="form-control">
-                    <span class="error">* <?php echo $zipcodeErr; ?></span>
+                    <span style="color:darkred" class="error"> <?php echo $zipcodeErr; ?></span>
+                    <input type="text" value="<?php echo htmlspecialchars($_POST['zipcode'] ?? '', ENT_QUOTES); ?>"
+                           id="zipcode" name="zipcode" class="form-control">
                 </div>
             </div>
         </fieldset>
@@ -81,6 +89,10 @@
         </label>
 
         <button type="submit" class="btn btn-primary">Order!</button>
+        <div class="alert alert-primary" role="alert">
+            Thank you! We received your order!
+
+        </div>
     </form>
 
     <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>

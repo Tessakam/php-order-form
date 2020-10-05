@@ -64,9 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["zipcode"])) {
         $zipcodeErr = "* Zipcode is required";
     } else {
-        $zipcode = test_input($_POST["streetnumber"]);
-        // validate number
-        if (!is_numeric($zipcode)) { //'/^([0-9]+)$/'
+        $zipcode = test_input($_POST["zipcode"]);
+        // validate number (also possible with is_numeric
+        if (!filter_var($zipcode, FILTER_VALIDATE_INT)) {
             $zipcodeErr = "Data entered is not a number";
         }
     }
@@ -78,6 +78,11 @@ function test_input($data)
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
+}
+
+//check if all fields are completed before popup message shows
+if(count(array_filter($_POST))!=count($_POST)){
+    alert 
 }
 
 //your products with their price.
