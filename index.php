@@ -10,7 +10,8 @@ error_reporting(E_ALL);
 //we are going to use session variables so we need to enable sessions
 session_start();
 
-function whatIsHappening() {
+function whatIsHappening()
+{
     echo '<h2>$_GET</h2>';
     var_dump($_GET);
     echo '<h2>$_POST</h2>';
@@ -29,18 +30,50 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 // required fields: e-mail, street, street number, city and zipcode
 // define variables and set to empty values
-$emailErr = $streetErr = $numberErr = $cityErr = $zipcodeErr = "";
-$email = $street = $number = $city = $zipcode = "";
+$emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = "";
+$email = $street = $streetNumber = $city = $zipcode = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["email"])) {
-        $nameErr = "Email is required";
+        $emailErr = "Email is required";
     } else {
-        $name = test_input($_POST["email"]);
-    }}
+        $email = test_input($_POST["email"]);
+    }
 
-function test_input($data) {
-    $data = trim($data);
+    if (empty($_POST["street"])) {
+        $streetErr = "Street is required";
+    } else {
+        $street = test_input($_POST["street"]);
+    }
+/*
+ $email = test_input($_POST["email"]);
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $emailErr = "Invalid format and please re-enter valid email";
+}
+ */
+    $streetNumber = test_input($_POST["streetnumber"]);
+    if (empty($_POST["streetnumber"])) {
+        $streetNumberErr = "Street number is required";
+    } else {
+        $streetNumber = test_input($_POST["streetnumber"]);
+    }
+
+    if (empty($_POST["city"])) {
+        $cityErr = "City is required";
+    } else {
+        $city = test_input($_POST["city"]);
+    }
+
+    if (empty($_POST["zipcode"])) {
+        $zipcodeErr = "Zipcode is required";
+    } else {
+        $zipcode = test_input($_POST["zipcode"]);
+    }
+}
+
+function test_input($data)
+{
+    $data = trim($data); // Strip whitespace (or other characters) from the beginning and end of a string
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
@@ -65,3 +98,4 @@ $products = [
 $totalValue = 0;
 
 require 'form-view.php';
+

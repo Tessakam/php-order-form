@@ -21,13 +21,13 @@ This counter should keep going up even when the user closes his browser.
 You can start modifying index.php and form-view.php, they already contain some code to help you on your way.
 ## Required features
 ### Step 1: Validation
-- Validate that the field e-mail is filled in and a valid e-mail address
-- Make sure that the street, street number, city and zipcode is a required field.
-- Make sure that street number and zipcode are only numbers.
-- After sending the form, when you have errors show them in a nice error box above the form, you can use the [bootstrap alerts](https://getbootstrap.com/docs/4.0/components/alerts/) for inspiration.
-    - You do not need to show each error with it's matching field, showing all errors on top of the form is enough for now. You can always come back it later and make it nicer.
-- If the form is invalid make sure all the values the user entered are still displayed in the form, so he doesn't need to fill them all in again!
-- If the form is valid (for now) just show the user a message above the form that his order has been sent
+-[x] Validate that the field e-mail is filled in and a valid e-mail address
+-[x] Make sure that the street, street number, city and zipcode is a required field.
+-[] Make sure that street number and zipcode are only numbers.
+-[] After sending the form, when you have errors show them in a nice error box above the form, you can use the [bootstrap alerts](https://getbootstrap.com/docs/4.0/components/alerts/) for inspiration.
+-[] You do not need to show each error with it's matching field, showing all errors on top of the form is enough for now. You can always come back it later and make it nicer.
+-[] If the form is invalid make sure all the values the user entered are still displayed in the form, so he doesn't need to fill them all in again!
+-[] If the form is valid (for now) just show the user a message above the form that his order has been sent
 
 ### Step 2: Make sure the address is saved
 Save all the address information as long as the user doesn't close the browser. When he closes the browser it is oké to lose his information.
@@ -62,7 +62,7 @@ Change the price calculation and email to support buying multiple items.
 - Change the products to use Objects instead of an array.
 
 ## Tips
-- You can use `filter_var($email, FILTER_VALIDATE_EMAIL)` to filter for e-mails.
+-[x] You can use `filter_var($email, FILTER_VALIDATE_EMAIL)` to filter for e-mails.
 - To check if an input is a number you can use `is_numeric($number)`
 - If the `mail()` function doesn't work you might need to install [sendmail](https://gist.github.com/adamstac/7462202)
 - When you are stuck try to run the function `whatIsHappening()`, it might provide you with information how to access your input data. Or even better: use xdebug!
