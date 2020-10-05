@@ -1,6 +1,11 @@
 <?php
 //this line makes PHP behave in a more strict way
 declare(strict_types=1);
+ini_set('display_errors', "1");
+ini_set('display_startup_errors', "1");
+error_reporting(E_ALL);
+
+// TIP: stuck? run function whatIsHappening()
 
 //we are going to use session variables so we need to enable sessions
 session_start();
@@ -14,6 +19,31 @@ function whatIsHappening() {
     var_dump($_COOKIE);
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
+}
+
+//validate email
+$email = test_input($_POST["email"]);
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $emailErr = "Invalid format and please re-enter valid email";
+}
+
+// required fields: e-mail, street, street number, city and zipcode
+// define variables and set to empty values
+$emailErr = $streetErr = $numberErr = $cityErr = $zipcodeErr = "";
+$email = $street = $number = $city = $zipcode = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["email"])) {
+        $nameErr = "Email is required";
+    } else {
+        $name = test_input($_POST["email"]);
+    }}
+
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 
 //your products with their price.
