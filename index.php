@@ -22,46 +22,53 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
-//validate email
-$email = test_input($_POST["email"]);
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $emailErr = "Invalid format and please re-enter valid email";
-}
-
 // required fields: e-mail, street, street number, city and zipcode
 // define variables and set to empty values
 $emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = "";
 $email = $street = $streetNumber = $city = $zipcode = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     if (empty($_POST["email"])) {
-        $email = test_input($_POST["email"]);
-    } else {
         $emailErr = "Email is required";
+    } else {
+        $email = test_input($_POST["email"]);
+        // validate email
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format";
+        }
     }
 
     if (empty($_POST["street"])) {
-        $street = test_input($_POST["street"]);
-    } else {
         $streetErr = "Street is required";
+    } else {
+        $street = test_input($_POST["street"]);
     }
 
     if (empty($_POST["streetnumber"])) {
-        $streetNumber = test_input($_POST["streetnumber"]);
-    } else {
         $streetNumberErr = "Street number is required";
+    } else {
+        $streetNumber= test_input($_POST["streetnumber"]);
+        // validate number
+        if (!is_numeric($streetNumber)) {
+            $streetNumberErr = "Data entered is not a number";
+        }
     }
 
     if (empty($_POST["city"])) {
-        $city = test_input($_POST["city"]);
-    } else {
         $cityErr = "City is required";
+    } else {
+        $city = test_input($_POST["city"]);
     }
 
     if (empty($_POST["zipcode"])) {
-        $zipcode = test_input($_POST["zipcode"]);
-    } else {
         $zipcodeErr = "Zipcode is required";
+    } else {
+        $zipcode = test_input($_POST["streetnumber"]);
+        // validate number
+        if (!is_numeric($zipcode)) { //'/^([0-9]+)$/'
+            $zipcodeErr = "Data entered is not a number";
+        }
     }
 }
 
@@ -72,7 +79,6 @@ function test_input($data)
     $data = htmlspecialchars($data);
     return $data;
 }
-
 
 //your products with their price.
 $products = [
