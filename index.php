@@ -30,7 +30,7 @@ $email = $street = $streetNumber = $city = $zipcode = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["email"])) {
-        $emailErr = "Email is required";
+        $emailErr = "* Email is required";
     } else {
         $email = test_input($_POST["email"]);
         // validate email
@@ -40,13 +40,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($_POST["street"])) {
-        $streetErr = "Street is required";
+        $streetErr = "* Street is required";
     } else {
         $street = test_input($_POST["street"]);
     }
 
     if (empty($_POST["streetnumber"])) {
-        $streetNumberErr = "Street number is required";
+        $streetNumberErr = "* Street number is required";
     } else {
         $streetNumber= test_input($_POST["streetnumber"]);
         // validate number
@@ -56,13 +56,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($_POST["city"])) {
-        $cityErr = "City is required";
+        $cityErr = "* City is required";
     } else {
         $city = test_input($_POST["city"]);
     }
 
     if (empty($_POST["zipcode"])) {
-        $zipcodeErr = "Zipcode is required";
+        $zipcodeErr = "* Zipcode is required";
     } else {
         $zipcode = test_input($_POST["streetnumber"]);
         // validate number
