@@ -26,6 +26,7 @@ function whatIsHappening()
 // required fields: e-mail, street, street number, city and zipcode
 // define variables and set to empty values
 $submit = "";
+$products = $food = $drinks = "";
 $emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = "";
 $email = $street = $streetNumber = $city = $zipcode = "";
 
@@ -111,8 +112,9 @@ function test_input($data)
     return $data;
 }
 
+
 //your products with their price.
-$products = [
+$food = [
     ['name' => 'Club Ham', 'price' => 3.20],
     ['name' => 'Club Cheese', 'price' => 3],
     ['name' => 'Club Cheese & Ham', 'price' => 4],
@@ -120,12 +122,19 @@ $products = [
     ['name' => 'Club Salmon', 'price' => 5]
 ];
 
-$products = [
+$drinks = [
     ['name' => 'Cola', 'price' => 2],
     ['name' => 'Fanta', 'price' => 2],
     ['name' => 'Sprite', 'price' => 2],
     ['name' => 'Ice-tea', 'price' => 3],
 ];
+
+//switch between drinks and food
+if ($_GET["food"] == 1 ){
+    $products = $food;
+} else {
+    $products = $drinks;
+}
 
 $totalValue = 0;
 // whatIsHappening();
