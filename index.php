@@ -23,12 +23,26 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
+//step 2: sessions -  Make sure the input fields are saved
+//Isset = Check whether variable is empty, make sure the fields are saved
+//if (!isset($_SESSION["email"])){$_SESSION["email"]=$email;}
+
+//if (isset($_POST['submit'])) {
+//$_SESSION["email"] = $email;
+//$_SESSION["street"] = $street;
+//$_SESSION["streetnumber"] = $streetNumber;
+//$_SESSION["zipcode"] = $zipcode;
+//$_SESSION["city"] = $city;
+
+
+// als het NIET leeg is = neem de vorige sessie over
+//if (!isset($_SESSION["email"])){$_SESSION["email"]=$email;}
+
 // required fields: e-mail, street, street number, city and zipcode
 // define variables and set to empty values
-$submit ="";
+$submit = "";
 $emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = "";
 $email = $street = $streetNumber = $city = $zipcode = "";
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -36,9 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $emailErr = "* Email is required";
     } else {
         $email = test_input($_POST["email"]);
-        //Check whether variable is NOT empty, make sure the fields are saved
-        if (!isset($_SESSION["email"])){$_SESSION["email"]=$email;}
-        
         // validate email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $emailErr = "Invalid email format";
@@ -49,14 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $streetErr = "* Street is required";
     } else {
         $street = test_input($_POST["street"]);
-        $_SESSION["street"] = $street;
     }
 
     if (empty($_POST["streetnumber"])) {
         $streetNumberErr = "* Street number is required";
     } else {
         $streetNumber = test_input($_POST["streetnumber"]);
-        $_SESSION["streetnumber"] = $streetNumber;
         // validate number
         if (!is_numeric($streetNumber)) {
             $streetNumberErr = "Data entered is not a number";
@@ -67,14 +76,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cityErr = "* City is required";
     } else {
         $city = test_input($_POST["city"]);
-        $_SESSION["city"] = $city;
     }
 
     if (empty($_POST["zipcode"])) {
         $zipcodeErr = "* Zipcode is required";
     } else {
         $zipcode = test_input($_POST["zipcode"]);
-        $_SESSION["zipcode"] = $zipcode;
         // validate number (also possible with is_numeric
         if (!filter_var($zipcode, FILTER_VALIDATE_INT)) {
             $zipcodeErr = "Data entered is not a number";

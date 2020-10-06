@@ -23,10 +23,13 @@
         </ul>
     </nav>
 
+    <div <span class="submit"> <?php echo $submit; ?></span>
+    </div>
     <!--Submit form = the form data is sent with method="post". -->
     <!-- HTML use method Get and link with name - NOT with id!! -->
 
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <form method="post"
+          action="<?php echo htmlspecialchars ($_SERVER["PHP_SELF"]); ?>">
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="email">E-mail:</label>
@@ -88,11 +91,8 @@
             Express delivery (+ 5 EUR)
         </label>
 
-        <button type="submit" class="btn btn-primary">Order!</button>
-        <div class="alert alert-primary" role="alert">
-            Thank you! We received your order!
+        <button type="submit" name="submit" class="btn btn-primary">Order!</button>
 
-        </div>
     </form>
 
     <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
@@ -103,5 +103,6 @@
         text-align: center;
     }
 </style>
+<?php whatIsHappening(); ?>
 </body>
 </html>
