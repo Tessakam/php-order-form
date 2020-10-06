@@ -23,28 +23,37 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
-//step 2: sessions -  Make sure the input fields are saved
-//Isset = Check whether variable is empty, make sure the fields are saved
-//if (!isset($_SESSION["email"])){$_SESSION["email"]=$email;}
-
-//if (isset($_POST['submit'])) {
-//$_SESSION["email"] = $email;
-//$_SESSION["street"] = $street;
-//$_SESSION["streetnumber"] = $streetNumber;
-//$_SESSION["zipcode"] = $zipcode;
-//$_SESSION["city"] = $city;
-
-
-// als het NIET leeg is = neem de vorige sessie over
-//if (!isset($_SESSION["email"])){$_SESSION["email"]=$email;}
-
 // required fields: e-mail, street, street number, city and zipcode
 // define variables and set to empty values
 $submit = "";
 $emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = "";
 $email = $street = $streetNumber = $city = $zipcode = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//step 2: sessions -  Make sure the input fields are saved
+
+if (!empty($_SESSION['email'])){
+    $street = $_SESSION['email'];
+}
+if (!empty($_SESSION['street'])){
+    $streetNum = $_SESSION['street'];
+}
+if (!empty($_SESSION['streetnumber'])){
+    $streetNum = $_SESSION['streetnumber'];
+}
+if (!empty($_SESSION['city'])){
+    $city = $_SESSION['city'];
+}
+if (!empty($_SESSION['zipcode'])){
+    $zipcode = $_SESSION['zipcode'];
+}
+
+//$_SESSION["email"] = $email;
+//$_SESSION["street"] = $street;
+//$_SESSION["streetnumber"] = $streetNumber;
+//$_SESSION["zipcode"] = $zipcode;
+//$_SESSION["city"] = $city;
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["email"])) {
         $emailErr = "* Email is required";
@@ -62,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $street = test_input($_POST["street"]);
     }
 
+
     if (empty($_POST["streetnumber"])) {
         $streetNumberErr = "* Street number is required";
     } else {
@@ -69,6 +79,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // validate number
         if (!is_numeric($streetNumber)) {
             $streetNumberErr = "Data entered is not a number";
+        }
+     else {
+            $_SESSION['streetnumber'] = $streetNumber;
         }
     }
 
