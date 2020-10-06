@@ -26,7 +26,6 @@ function whatIsHappening()
 // required fields: e-mail, street, street number, city and zipcode
 // define variables and set to empty values
 $submit = "";
-$products = $food = $drinks = "";
 $emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = "";
 $email = $street = $streetNumber = $city = $zipcode = "";
 
@@ -112,7 +111,6 @@ function test_input($data)
     return $data;
 }
 
-
 //your products with their price.
 $food = [
     ['name' => 'Club Ham', 'price' => 3.20],
@@ -130,14 +128,28 @@ $drinks = [
 ];
 
 //switch between drinks and food
-if ($_GET["food"] == 1 ){
+if ($_GET['food'] == 1){
     $products = $food;
 } else {
     $products = $drinks;
 }
 
+//ERROR bij index.php -- wel OK als je doorklikt naar food=1 en food=0
+//make food default page ==> http://orderform.local/?food=1
+//isset = Check whether a variable is empty
+if (!isset($_SESSION['$products'])){
+    $products = $food;
+}
+/*
+//Calculate the delivery time: normal delivery: 2H // express 45 min
+// new date/time object
+$date = new DateTime('now');
+var_dump($date);
+*/
+
 $totalValue = 0;
 // whatIsHappening();
 require 'form-view.php';
 //https://www.tutorialspoint.com/php/php_validation_example.htm
+//https://www.php.net/manual/en/function.setcookie.php
 
