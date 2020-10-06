@@ -7,7 +7,9 @@ error_reporting(E_ALL);
 
 // TIP: stuck? run function whatIsHappening()
 //we are going to use session variables so we need to enable sessions
+
 session_start();
+//session is started if you don't write this line can't use $_Session global variable
 
 function whatIsHappening()
 {
@@ -27,12 +29,16 @@ $submit ="";
 $emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = "";
 $email = $street = $streetNumber = $city = $zipcode = "";
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["email"])) {
         $emailErr = "* Email is required";
     } else {
         $email = test_input($_POST["email"]);
+        //Check whether variable is NOT empty, make sure the fields are saved
+        if (!isset($_SESSION["email"])){$_SESSION["email"]=$email;}
+        
         // validate email
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $emailErr = "Invalid email format";
@@ -43,12 +49,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $streetErr = "* Street is required";
     } else {
         $street = test_input($_POST["street"]);
+        $_SESSION["street"] = $street;
     }
 
     if (empty($_POST["streetnumber"])) {
         $streetNumberErr = "* Street number is required";
     } else {
         $streetNumber = test_input($_POST["streetnumber"]);
+        $_SESSION["streetnumber"] = $streetNumber;
         // validate number
         if (!is_numeric($streetNumber)) {
             $streetNumberErr = "Data entered is not a number";
@@ -59,12 +67,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cityErr = "* City is required";
     } else {
         $city = test_input($_POST["city"]);
+        $_SESSION["city"] = $city;
     }
 
     if (empty($_POST["zipcode"])) {
         $zipcodeErr = "* Zipcode is required";
     } else {
         $zipcode = test_input($_POST["zipcode"]);
+        $_SESSION["zipcode"] = $zipcode;
         // validate number (also possible with is_numeric
         if (!filter_var($zipcode, FILTER_VALIDATE_INT)) {
             $zipcodeErr = "Data entered is not a number";
