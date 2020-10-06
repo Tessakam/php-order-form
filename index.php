@@ -6,7 +6,6 @@ ini_set('display_startup_errors', "1");
 error_reporting(E_ALL);
 
 // TIP: stuck? run function whatIsHappening()
-
 //we are going to use session variables so we need to enable sessions
 session_start();
 
@@ -24,6 +23,7 @@ function whatIsHappening()
 
 // required fields: e-mail, street, street number, city and zipcode
 // define variables and set to empty values
+$submit ="";
 $emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = "";
 $email = $street = $streetNumber = $city = $zipcode = "";
 
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["streetnumber"])) {
         $streetNumberErr = "* Street number is required";
     } else {
-        $streetNumber= test_input($_POST["streetnumber"]);
+        $streetNumber = test_input($_POST["streetnumber"]);
         // validate number
         if (!is_numeric($streetNumber)) {
             $streetNumberErr = "Data entered is not a number";
@@ -70,6 +70,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $zipcodeErr = "Data entered is not a number";
         }
     }
+    //check if all fields are completed before popup message shows
+    if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
+        $submit = '<div class="alert alert-primary" role="alert">
+    Form submitted. We received your order!
+    </div>';
+    }
 }
 
 function test_input($data)
@@ -80,10 +86,6 @@ function test_input($data)
     return $data;
 }
 
-//check if all fields are completed before popup message shows
-if(count(array_filter($_POST))!=count($_POST)){
-    alert 
-}
 
 //your products with their price.
 $products = [
@@ -102,6 +104,7 @@ $products = [
 ];
 
 $totalValue = 0;
-
+// whatIsHappening();
 require 'form-view.php';
+//https://www.tutorialspoint.com/php/php_validation_example.htm
 
