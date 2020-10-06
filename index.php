@@ -29,31 +29,22 @@ $submit = "";
 $emailErr = $streetErr = $streetNumberErr = $cityErr = $zipcodeErr = "";
 $email = $street = $streetNumber = $city = $zipcode = "";
 
-//step 2: sessions -  Make sure the input fields are saved
+//step 2: sessions -  Make sure the input fields are saved for the address
 
-if (!empty($_SESSION['email'])){
-    $street = $_SESSION['email'];
+if (!empty($_SESSION['street'])) {
+    $street = $_SESSION['street'];
 }
-if (!empty($_SESSION['street'])){
-    $streetNum = $_SESSION['street'];
+if (!empty($_SESSION['streetnumber'])) {
+    $streetNumber = $_SESSION['streetnumber'];
 }
-if (!empty($_SESSION['streetnumber'])){
-    $streetNum = $_SESSION['streetnumber'];
-}
-if (!empty($_SESSION['city'])){
+if (!empty($_SESSION['city'])) {
     $city = $_SESSION['city'];
 }
-if (!empty($_SESSION['zipcode'])){
+if (!empty($_SESSION['zipcode'])) {
     $zipcode = $_SESSION['zipcode'];
 }
 
-//$_SESSION["email"] = $email;
-//$_SESSION["street"] = $street;
-//$_SESSION["streetnumber"] = $streetNumber;
-//$_SESSION["zipcode"] = $zipcode;
-//$_SESSION["city"] = $city;
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($_POST["email"])) {
         $emailErr = "* Email is required";
@@ -69,8 +60,8 @@ if (!empty($_SESSION['zipcode'])){
         $streetErr = "* Street is required";
     } else {
         $street = test_input($_POST["street"]);
+        $_SESSION['street'] = $street;
     }
-
 
     if (empty($_POST["streetnumber"])) {
         $streetNumberErr = "* Street number is required";
@@ -80,8 +71,8 @@ if (!empty($_SESSION['zipcode'])){
         if (!is_numeric($streetNumber)) {
             $streetNumberErr = "Data entered is not a number";
         }
-     else {
-            $_SESSION['streetnumber'] = $streetNumber;
+        else {
+        $_SESSION['streetnumber'] = $streetNumber;
         }
     }
 
@@ -89,6 +80,7 @@ if (!empty($_SESSION['zipcode'])){
         $cityErr = "* City is required";
     } else {
         $city = test_input($_POST["city"]);
+        $_SESSION['city'] = $city;
     }
 
     if (empty($_POST["zipcode"])) {
@@ -98,6 +90,9 @@ if (!empty($_SESSION['zipcode'])){
         // validate number (also possible with is_numeric
         if (!filter_var($zipcode, FILTER_VALIDATE_INT)) {
             $zipcodeErr = "Data entered is not a number";
+        }
+        else {
+            $_SESSION['zipcode'] = $zipcode;
         }
     }
     //check if all fields are completed before popup message shows
@@ -115,7 +110,6 @@ function test_input($data)
     $data = htmlspecialchars($data);
     return $data;
 }
-
 
 //your products with their price.
 $products = [

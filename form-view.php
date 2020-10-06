@@ -48,7 +48,7 @@
                     <label for="street">Street:</label>
                     <span style="color:darkred" class="error"> <?php echo $streetErr; ?></span>
                     <input type="text" name="street"
-                           value="<?php echo htmlspecialchars($_POST['street'] ?? '', ENT_QUOTES); ?>" id="street"
+                           value="<?php echo $street; ?>" id="street"
                            class="form-control">
                     <!-- remember value https://webstoked.com/keep-form-data-submit-refresh-php/ -->
                     <!-- htmlspecialchars() is used here to convert specific HTML characters to their HTML entity names, e.g. > will be converted to &gt;. This prevents the form from breaking if the user submits HTML markup and also is a means of protecting against XSS (Cross Site Scripting) attacks, which attackers will use to try to exploit vulnerabilities in web applications -->
@@ -56,7 +56,7 @@
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number (only numbers):</label>
                     <span style="color:darkred" class="error"> <?php echo $streetNumberErr; ?></span>
-                    <input type="text" value="<?php echo htmlspecialchars($_POST['streetnumber'] ?? '', ENT_QUOTES); ?>"
+                    <input type="text" value="<?php echo $streetNumber; ?>"
                            id="streetnumber" name="streetnumber" class="form-control">
                 </div>
             </div>
@@ -64,13 +64,13 @@
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
                     <span style="color:darkred" class="error"> <?php echo $cityErr; ?></span>
-                    <input type="text" value="<?php echo htmlspecialchars($_POST['city'] ?? '', ENT_QUOTES); ?>"
+                    <input type="text" value="<?php echo $city; ?>"
                            id="city" name="city" class="form-control">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
                     <span style="color:darkred" class="error"> <?php echo $zipcodeErr; ?></span>
-                    <input type="text" value="<?php echo htmlspecialchars($_POST['zipcode'] ?? '', ENT_QUOTES); ?>"
+                    <input type="text" value="<?php echo $zipcode; ?>"
                            id="zipcode" name="zipcode" class="form-control">
                 </div>
             </div>
