@@ -127,25 +127,27 @@ $drinks = [
     ['name' => 'Ice-tea', 'price' => 3],
 ];
 
-//switch between drinks and food
-if ($_GET['food'] == 1){
+//make food default page by using session
+//isset = Check whether a variable is empty
+if (!isset($_SESSION['products'])){
     $products = $food;
-} else {
-    $products = $drinks;
+    } else {
+    $products = $_SESSION['products'];
 }
 
-//ERROR bij index.php -- wel OK als je doorklikt naar food=1 en food=0
-//make food default page ==> http://orderform.local/?food=1
-//isset = Check whether a variable is empty
-if (!isset($_SESSION['$products'])){
-    $products = $food;
+//switch between drinks and food
+if (isset($_GET['food'])){
+    if ($_GET['food'] == 1) {
+        $products = $food;
+    } else {
+        $products = $drinks;
+    }
 }
-/*
+
 //Calculate the delivery time: normal delivery: 2H // express 45 min
 // new date/time object
-$date = new DateTime('now');
-var_dump($date);
-*/
+//$date = new DateTime('now');
+//var_dump($date);
 
 $totalValue = 0;
 // whatIsHappening();
