@@ -93,12 +93,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['zipcode'] = $zipcode;
         }
     }
-    //check if all fields are completed before popup message shows
+    /* //check if all fields are completed before popup message shows
     if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
         $submit = '<div class="alert alert-primary" role="alert">
-    Form submitted. We received your order!
+    Form submitted. We received your order! 
     </div>';
-    }
+    }*/
 }
 
 function test_input($data)
@@ -146,7 +146,8 @@ if (isset($_GET['food'])) {
 //Calculate the delivery time: normal delivery: 2H // express 45 min
 
 $delivery = "";
-$totalValue = 0;
+$totalValue ="";
+
 
 if (isset($_GET['express_delivery'])) { // express delivery checked?
     $delivery = "You will receive your delivery on " . date ("jS F, Y - H:i:s",strtotime("+45minutes")) . $totalValue += 5;
@@ -154,7 +155,22 @@ if (isset($_GET['express_delivery'])) { // express delivery checked?
     $delivery = "You will receive your delivery on " . date("jS F, Y - H:i:s",strtotime("+2 hours")) . $totalValue ;
 }
 
-// var_dump($delivery);
+// popup confirmation and delivery
+if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
+    $submit = '<div class="alert alert-primary" role="alert">
+    Form submitted! ' . $delivery;
+    '</div>';
+} // var_dump($delivery);
+
+// counter based on checkboxes - tip from Kayalin
+$checkboxes = (isset($_POST['products'])) ? $_POST['products'] : array();
+// use loop for the prices
+for ($i = 0; $i < count($checkboxes);$i++){
+      $totalValue += $checkboxes[$i]['price'];
+}
+var_dump($_POST['products']);
+
+
 // whatIsHappening();
 
 require 'form-view.php';
