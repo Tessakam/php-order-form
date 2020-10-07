@@ -70,9 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // validate number
         if (!is_numeric($streetNumber)) {
             $streetNumberErr = "Data entered is not a number";
-        }
-        else {
-        $_SESSION['streetnumber'] = $streetNumber;
+        } else {
+            $_SESSION['streetnumber'] = $streetNumber;
         }
     }
 
@@ -90,15 +89,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // validate number (also possible with is_numeric
         if (!filter_var($zipcode, FILTER_VALIDATE_INT)) {
             $zipcodeErr = "Data entered is not a number";
-        }
-        else {
+        } else {
             $_SESSION['zipcode'] = $zipcode;
         }
     }
     //check if all fields are completed before popup message shows
     if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
         $submit = '<div class="alert alert-primary" role="alert">
-    Form submitted. We received your order!
+    Form submitted. We received your order! 
     </div>';
     }
 }
@@ -129,27 +127,37 @@ $drinks = [
 
 //make food default page by using session
 //isset = Check whether a variable is empty
-if (!isset($_SESSION['products'])){
+if (!isset($_SESSION['products'])) {
     $products = $food;
-    } else {
+} else {
     $products = $_SESSION['products'];
 }
-
 //switch between drinks and food
-if (isset($_GET['food'])){
+if (isset($_GET['food'])) {
     if ($_GET['food'] == 1) {
         $products = $food;
+        $_SESSION['products'] = $food;
     } else {
         $products = $drinks;
+        $_SESSION['products'] = $drinks;
     }
 }
 
 //Calculate the delivery time: normal delivery: 2H // express 45 min
-// new date/time object
-//$date = new DateTime('now');
-//var_dump($date);
 
+$delivery = "";
 $totalValue = 0;
+
+if (isset($_GET['express_delivery'])) { // express delivery checked?
+    $delivery = "You will receive your delivery at " . date("+45minutes") . $totalValue += 5;
+} else {
+    $delivery = "You will receive your delivery at " . date("+2 hours") . $totalValue;
+}
+var_dump($delivery);
+
+//add delivery time to popup
+
+
 // whatIsHappening();
 require 'form-view.php';
 //https://www.tutorialspoint.com/php/php_validation_example.htm
