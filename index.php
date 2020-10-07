@@ -144,10 +144,8 @@ if (isset($_GET['food'])) {
 }
 
 //Calculate the delivery time: normal delivery: 2H // express 45 min
-
 $delivery = "";
-$totalValue ="";
-
+$totalValue = 0;
 
 if (isset($_GET['express_delivery'])) { // express delivery checked?
     $delivery = "You will receive your delivery on " . date ("jS F, Y - H:i:s",strtotime("+45minutes")) . $totalValue += 5;
@@ -158,17 +156,18 @@ if (isset($_GET['express_delivery'])) { // express delivery checked?
 // popup confirmation and delivery
 if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
     $submit = '<div class="alert alert-primary" role="alert">
-    Form submitted! ' . $delivery;
-    '</div>';
+    Form submitted! ' . $delivery; '</div>';
 } // var_dump($delivery);
 
-// counter based on checkboxes - tip from Kayalin
+// counter based on checkboxes
 $checkboxes = (isset($_POST['products'])) ? $_POST['products'] : array();
+var_dump($checkboxes);
+
 // use loop for the prices
 for ($i = 0; $i < count($checkboxes);$i++){
-      $totalValue += $checkboxes[$i]['price'];
+      $totalValue += $products[$i]['price'];
 }
-var_dump($_POST['products']);
+//var_dump($_POST['products']);
 
 
 // whatIsHappening();
