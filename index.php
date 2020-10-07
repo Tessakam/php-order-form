@@ -145,30 +145,43 @@ if (isset($_GET['food'])) {
 
 //Calculate the delivery time: normal delivery: 2H // express 45 min
 $delivery = "";
-$totalValue = 0;
+$orderValue = 0;
 
-if (isset($_GET['express_delivery'])) { // express delivery checked?
-    $delivery = "You will receive your delivery on " . date ("jS F, Y - H:i:s",strtotime("+45minutes")) . $totalValue += 5;
+if (isset($_POST['express_delivery'])) { // express delivery checked?
+    $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+45minutes"));
 } else {
-    $delivery = "You will receive your delivery on " . date("jS F, Y - H:i:s",strtotime("+2 hours")) . $totalValue ;
+    $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+2 hours"));
 }
 
 // popup confirmation and delivery
 if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
     $submit = '<div class="alert alert-primary" role="alert">
-    Form submitted! ' . $delivery; '</div>';
+    Form submitted! ' . $delivery;
+    '</div>';
 } // var_dump($delivery);
 
 // counter based on checkboxes
 $checkboxes = (isset($_POST['products'])) ? $_POST['products'] : array();
-var_dump($checkboxes);
+//var_dump($checkboxes);
 
 // use loop for the prices
-for ($i = 0; $i < count($checkboxes);$i++){
-      $totalValue += $products[$i]['price'];
+for ($i = 0; $i < count($checkboxes); $i++) {
+    $orderValue += $products[$i]['price'];
+    //var_dump($_POST['products']);
 }
-//var_dump($_POST['products']);
 
+// setcookie()
+$totalValue = $orderValue;
+
+if(isset($_COOKIE['order'])){
+    $totalValue = $_COOKIE['order'];
+}
+else {
+    $cookie_name ='order';
+    $cookie_value = $totalValue;
+    setcookie($cookie_name, $cookie_value, time()+3600);  // expires in 1 hour
+}
+print_r($_COOKIE);
 
 // whatIsHappening();
 
