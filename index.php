@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //check if all fields are completed before popup message shows
     if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
         $submit = '<div class="alert alert-primary" role="alert">
-    Form submitted. We received your order! 
+    Form submitted. We received your order!
     </div>';
     }
 }
@@ -149,17 +149,16 @@ $delivery = "";
 $totalValue = 0;
 
 if (isset($_GET['express_delivery'])) { // express delivery checked?
-    $delivery = "You will receive your delivery at " . date("+45minutes") . $totalValue += 5;
+    $delivery = "You will receive your delivery on " . date ("jS F, Y - H:i:s",strtotime("+45minutes")) . $totalValue += 5;
 } else {
-    $delivery = "You will receive your delivery at " . date("+2 hours") . $totalValue;
+    $delivery = "You will receive your delivery on " . date("jS F, Y - H:i:s",strtotime("+2 hours")) . $totalValue ;
 }
-var_dump($delivery);
 
-//add delivery time to popup
-
-
+// var_dump($delivery);
 // whatIsHappening();
+
 require 'form-view.php';
 //https://www.tutorialspoint.com/php/php_validation_example.htm
 //https://www.php.net/manual/en/function.setcookie.php
+//https://stackoverflow.com/questions/15728741/use-strtotime-to-format-variables-for-hour-minute-and-am-pm
 
