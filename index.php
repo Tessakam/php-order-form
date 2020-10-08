@@ -23,6 +23,22 @@ function whatIsHappening()
     var_dump($_SESSION);
 }
 
+//your products with their price.
+$food = [
+    ['name' => 'Club Ham', 'price' => 3.20],
+    ['name' => 'Club Cheese', 'price' => 3],
+    ['name' => 'Club Cheese & Ham', 'price' => 4],
+    ['name' => 'Club Chicken', 'price' => 4],
+    ['name' => 'Club Salmon', 'price' => 5]
+];
+
+$drinks = [
+    ['name' => 'Cola', 'price' => 2],
+    ['name' => 'Fanta', 'price' => 2],
+    ['name' => 'Sprite', 'price' => 2],
+    ['name' => 'Ice-tea', 'price' => 3],
+];
+
 // required fields: e-mail, street, street number, city and zipcode
 // define variables and set to empty values
 $submit = "";
@@ -93,12 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['zipcode'] = $zipcode;
         }
     }
-    /* //check if all fields are completed before popup message shows
-    if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
-        $submit = '<div class="alert alert-primary" role="alert">
-    Form submitted. We received your order! 
-    </div>';
-    }*/
 }
 
 function test_input($data)
@@ -108,22 +118,6 @@ function test_input($data)
     $data = htmlspecialchars($data);
     return $data;
 }
-
-//your products with their price.
-$food = [
-    ['name' => 'Club Ham', 'price' => 3.20],
-    ['name' => 'Club Cheese', 'price' => 3],
-    ['name' => 'Club Cheese & Ham', 'price' => 4],
-    ['name' => 'Club Chicken', 'price' => 4],
-    ['name' => 'Club Salmon', 'price' => 5]
-];
-
-$drinks = [
-    ['name' => 'Cola', 'price' => 2],
-    ['name' => 'Fanta', 'price' => 2],
-    ['name' => 'Sprite', 'price' => 2],
-    ['name' => 'Ice-tea', 'price' => 3],
-];
 
 //make food default page by using session
 //isset = Check whether a variable is empty
@@ -145,6 +139,7 @@ if (isset($_GET['food'])) {
 
 //Calculate the delivery time: normal delivery: 2H // express 45 min
 $delivery = "";
+$totalValue = 0;
 $orderValue = 0;
 
 if (isset($_POST['express_delivery'])) { // express delivery checked?
@@ -157,7 +152,6 @@ if (isset($_POST['express_delivery'])) { // express delivery checked?
 if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
     $submit = '<div class="alert alert-primary" role="alert">
     Form submitted! ' . $delivery;
-    '</div>';
 } // var_dump($delivery);
 
 // counter based on checkboxes
@@ -166,11 +160,28 @@ $checkboxes = (isset($_POST['products'])) ? $_POST['products'] : array();
 
 // use loop for the prices
 for ($i = 0; $i < count($checkboxes); $i++) {
-    $orderValue += $products[$i]['price'];
+    $totalValue += $products[$i]['price'];
     //var_dump($_POST['products']);
 }
 
-// setcookie()
+//set cookie to calculate the total
+setcookie("totalValue", strval($totalValue), time()+3600);  // expires in 1 hour
+
+// setup mail function
+$to = "mmmoppy@gmail.com";
+$subject = "Your order from the Personal Ham Processors ";
+
+$headers = "From: $email";
+$message = " Email: {$email}\n street: {$street}\n streetnumber: {$streetNumber}\n city: {$city}\n zipcode: {$zipcode}\n  total order: {$totalValue}";
+$sent = mail($to, $subject, $headers, $message);
+
+
+require 'form-view.php';
+//https://www.tutorialspoint.com/php/php_validation_example.htm
+//https://www.php.net/manual/en/function.setcookie.php
+//https://stackoverflow.com/questions/15728741/use-strtotime-to-format-variables-for-hour-minute-and-am-pm
+
+/* Original code cookie
 $totalValue = $orderValue;
 
 if(isset($_COOKIE['order'])){
@@ -179,14 +190,12 @@ if(isset($_COOKIE['order'])){
 else {
     $cookie_name ='order';
     $cookie_value = $totalValue;
-    setcookie($cookie_name, $cookie_value, time()+3600);  // expires in 1 hour
-}
-print_r($_COOKIE);
+    setcookie($cookie_name,strval($cookie_value), time()+3600);  // expires in 1 hour
+}*/
 
-// whatIsHappening();
-
-require 'form-view.php';
-//https://www.tutorialspoint.com/php/php_validation_example.htm
-//https://www.php.net/manual/en/function.setcookie.php
-//https://stackoverflow.com/questions/15728741/use-strtotime-to-format-variables-for-hour-minute-and-am-pm
-
+/* //check if all fields are completed before popup message shows
+if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
+    $submit = '<div class="alert alert-primary" role="alert">
+Form submitted. We received your order!
+</div>';
+}*/
