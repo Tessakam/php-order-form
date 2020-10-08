@@ -141,9 +141,9 @@ if (isset($_GET['food'])) {
 $delivery = "";
 $totalValue = 0;
 $orderValue = 0;
-$express = 5;
 
 if (isset($_POST['express_delivery'])) { // express delivery checked?
+    $totalValue +=5; //add 5 euro to ordertotal
     $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+45minutes")) ." - Note: extra 5 EUR for express delivery!";
 } else {
     $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+2 hours"));
