@@ -143,7 +143,7 @@ $totalValue = 0;
 $orderValue = 0;
 
 if (isset($_POST['express_delivery'])) { // express delivery checked?
-    $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+45minutes"));
+    $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+45minutes")) ." - Note: extra 5 EUR!";
 } else {
     $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+2 hours"));
 }
@@ -168,18 +168,31 @@ for ($i = 0; $i < count($checkboxes); $i++) {
 setcookie("totalValue", strval($totalValue), time()+3600);  // expires in 1 hour
 
 // setup mail function
-$to = "mmmoppy@gmail.com";
-$subject = "Your order from the Personal Ham Processors ";
+function sendEmail()
+{
+    //make global for variables, otherwise undefined
+    global $email, $street, $streetNumber, $city, $zipcode, $totalValue, $delivery;
 
-$headers = "From: $email";
-$message = " Email: {$email}\n street: {$street}\n streetnumber: {$streetNumber}\n city: {$city}\n zipcode: {$zipcode}\n  total order: {$totalValue}";
-$sent = mail($to, $subject, $headers, $message);
+    $to = "mmmoppy@gmail.com";
+    $subject = "Your order from the Personal Ham Processors ";
+
+    $headers = "From: $email";
+    $message = "Email: {$email}\n street: {$street}\n streetnumber: {$streetNumber}\n city: {$city}\n zipcode: {$zipcode}\n  total order: {$totalValue}";
+    var_dump($message);
+
+    //confirmation mail
+    mail($to, $subject, $headers, $message, $delivery);
+    //mail to restaurant - mail("order@)personalhamprocessors.be", 'New order confirmation', $message);
+}
+sendEmail();
+//whatIsHappening();
 
 
 require 'form-view.php';
 //https://www.tutorialspoint.com/php/php_validation_example.htm
 //https://www.php.net/manual/en/function.setcookie.php
 //https://stackoverflow.com/questions/15728741/use-strtotime-to-format-variables-for-hour-minute-and-am-pm
+//https://stackoverflow.com/questions/566182/complete-mail-header
 
 /* Original code cookie
 $totalValue = $orderValue;
