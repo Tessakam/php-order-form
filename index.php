@@ -141,6 +141,7 @@ if (isset($_GET['food'])) {
 $delivery = "";
 $totalValue = 0;
 $orderValue = 0;
+$express = 5;
 
 if (isset($_POST['express_delivery'])) { // express delivery checked?
     $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+45minutes")) ." - Note: extra 5 EUR for express delivery!";
@@ -148,21 +149,21 @@ if (isset($_POST['express_delivery'])) { // express delivery checked?
     $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+2 hours"));
 }
 
+// counter based on checkboxes
+$checkboxes = (isset($_POST['products'])) ? $_POST['products'] : array();
+//var_dump($checkboxes);
+
+// use loop for the prices // to fix: order doesn't calculate the delivery
+for ($i = 0; $i < count($checkboxes); $i++) {
+    $totalValue += $products[$i]['price'];
+    //var_dump($_POST['products']);
+}
+
 // popup confirmation and delivery
 if ($emailErr == "" && $streetErr == "" && $streetNumberErr == "" && $cityErr == "" && $zipcodeErr == "") {
     $submit = '<div class="alert alert-primary" role="alert">
     Form submitted! ' . $delivery;
 } // var_dump($delivery);
-
-// counter based on checkboxes
-$checkboxes = (isset($_POST['products'])) ? $_POST['products'] : array();
-//var_dump($checkboxes);
-
-// use loop for the prices
-for ($i = 0; $i < count($checkboxes); $i++) {
-    $totalValue += $products[$i]['price'];
-    //var_dump($_POST['products']);
-}
 
 //set cookie to calculate the total
 setcookie("totalValue", strval($totalValue), time()+3600);  // expires in 1 hour
@@ -183,8 +184,8 @@ setcookie("totalValue", strval($totalValue), time()+3600);  // expires in 1 hour
     //confirmation mail
     mail($to, $subject, $headers, $message, $delivery);
     //mail to restaurant - mail("order@)personalhamprocessors.be", 'New order confirmation', $message);
-}*/
 sendEmail();
+}*/
 
 //whatIsHappening();
 
