@@ -143,7 +143,7 @@ $totalValue = 0;
 $orderValue = 0;
 
 if (isset($_POST['express_delivery'])) { // express delivery checked?
-    $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+45minutes")) ." - Note: extra 5 EUR!";
+    $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+45minutes")) ." - Note: extra 5 EUR for express delivery!";
 } else {
     $delivery = "You will receive your delivery on " . date("jS F - H:i", strtotime("+2 hours"));
 }
@@ -167,13 +167,13 @@ for ($i = 0; $i < count($checkboxes); $i++) {
 //set cookie to calculate the total
 setcookie("totalValue", strval($totalValue), time()+3600);  // expires in 1 hour
 
-// setup mail function
-function sendEmail()
+//installed "sendmail" but didn't receive any mail - commented out otherwise it takes to long to load
+/*function sendEmail()
 {
     //make global for variables, otherwise undefined
     global $email, $street, $streetNumber, $city, $zipcode, $totalValue, $delivery;
 
-    $to = "mmmoppy@gmail.com";
+    $to = "tessa.kam@hotmail.com"; //test if email is arriving
     $subject = "Your order from the Personal Ham Processors ";
 
     $headers = "From: $email";
@@ -183,8 +183,9 @@ function sendEmail()
     //confirmation mail
     mail($to, $subject, $headers, $message, $delivery);
     //mail to restaurant - mail("order@)personalhamprocessors.be", 'New order confirmation', $message);
-}
+}*/
 sendEmail();
+
 //whatIsHappening();
 
 
